@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, Heart, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CtaBand } from "@/components/site-layout";
+import { ReviewsPreview } from "@/components/customer-reviews";
 import { ProcessSteps, ServiceGrid } from "@/components/service-sections";
 import { articles } from "@/lib/site-content";
 import heroImage from "@/assets/hero-care.jpg";
