@@ -15,9 +15,16 @@ type FormErrors = {
   consent?: string;
 };
 
-export function RequestForm() {
+export const serviceOptions = serviceChoices;
+
+function buildWhatsAppMessage(v: { service: string; name: string; phone: string; email: string; date: string; message: string }) {
+  return `Bonjour LASISTANT.PRO, je souhaite demander un accompagnement.\nService : ${v.service}\nNom : ${v.name}\nTéléphone : ${v.phone}\nE-mail : ${v.email || "Non renseigné"}\nDate souhaitée : ${v.date || "Non renseignée"}\nBesoin : ${v.message}`;
+}
+
+export function RequestForm({ initialService = "", initialMessage = "" }: { initialService?: string; initialMessage?: string }) {
   const [step, setStep] = useState(1);
-  const [values, setValues] = useState({ service: "", name: "", phone: "", email: "", date: "", message: "", consent: false });
+  const [values, setValues] = useState({ service: serviceChoices.includes(initialService) ? initialService : "", name: "", phone: "", email: "", date: "", message: initialMessage.slice(0, 2000), consent: false });
+  const [waMessage, setWaMessage] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [sent, setSent] = useState(false);
 
@@ -43,7 +50,7 @@ export function RequestForm() {
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    if (validate(3)) setSent(true);
+    if (validate(3)) { setWaMessage(buildWhatsAppMessage(values)); setSent(true); }
   };
 
   if (sent) {
@@ -51,8 +58,9 @@ export function RequestForm() {
       <div className="rounded-lg border border-border bg-card p-8 text-center shadow-sm" role="status">
         <span className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-muted text-primary"><Check className="h-7 w-7" /></span>
         <h2 className="mt-5 text-2xl font-semibold">Votre demande a été vérifiée</h2>
-        <p className="mx-auto mt-3 max-w-md leading-7 text-muted-foreground">Toutes les informations nécessaires sont complètes. Envoyez-la maintenant à LASISTANT.PRO sur WhatsApp pour recevoir une réponse.</p>
-        <Button asChild className="mt-6 rounded-full"><a target="_blank" rel="noreferrer" href={`https://wa.me/21654479391?text=${encodeURIComponent(`Bonjour LASISTANT.PRO, je souhaite demander un accompagnement.\nService : ${values.service}\nNom : ${values.name}\nTéléphone : ${values.phone}\nE-mail : ${values.email || "Non renseigné"}\nDate souhaitée : ${values.date || "Non renseignée"}\nBesoin : ${values.message}`)}`}>Envoyer sur WhatsApp</a></Button>
+        <p className="mx-auto mt-3 max-w-md leading-7 text-muted-foreground">Relisez et modifiez librement votre message ci-dessous, puis envoyez-le à LASISTANT.PRO sur WhatsApp.</p>
+        <label className="mt-6 grid gap-2 text-left text-sm font-bold">Votre message WhatsApp<Textarea value={waMessage} onChange={(event) => setWaMessage(event.target.value)} rows={9} maxLength={3000} /></label>
+        <div className="mt-6 flex flex-wrap justify-center gap-3"><Button asChild className="rounded-full"><a target="_blank" rel="noreferrer" href={`https://wa.me/21654479391?text=${encodeURIComponent(waMessage.trim())}`}>Envoyer sur WhatsApp <Send /></a></Button><Button type="button" variant="ghost" onClick={() => setSent(false)}>Modifier la demande</Button></div>
       </div>
     );
   }

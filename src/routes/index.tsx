@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, BadgeCheck, Heart, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CtaBand } from "@/components/site-layout";
+import { ReviewsPreview } from "@/components/customer-reviews";
 import { ProcessSteps, ServiceGrid } from "@/components/service-sections";
 import { articles } from "@/lib/site-content";
 import heroImage from "@/assets/hero-care.jpg";
@@ -60,6 +61,7 @@ function HomePage() {
     </section>
 
     <section className="border-t border-border bg-card"><div className="page-shell section-space"><div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"><div><p className="eyebrow">Espace infos</p><h2 className="mt-4 text-3xl font-semibold md:text-4xl">Des repères pour mieux préparer.</h2></div><Button asChild variant="outline"><Link to="/actualites">Voir tous les conseils <ArrowRight /></Link></Button></div><div className="mt-10 grid gap-6 md:grid-cols-3">{articles.map((article) => <article key={article.title}><img src={article.image} alt="" width="1200" height="912" loading="lazy" className="aspect-[16/10] w-full rounded-md object-cover"/><p className="eyebrow mt-5">{article.category}</p><h3 className="mt-3 text-xl font-semibold">{article.title}</h3><p className="mt-3 text-sm leading-7 text-muted-foreground">{article.excerpt}</p></article>)}</div></div></section>
+    <ReviewsPreview />
     <CtaBand />
   </>;
 }
