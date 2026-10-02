@@ -23,7 +23,7 @@ const serviceMatches = [
 ];
 
 function detectServices(text: string) {
-  const main = text.split(/pourquoi/i)[0];
+  const main = text.split(/pourquoi/i)[0] ?? text;
   const found = serviceMatches.filter((s) => s.test.test(main));
   return found.length ? found : serviceMatches.filter((s) => s.test.test(text)).slice(0, 2);
 }
