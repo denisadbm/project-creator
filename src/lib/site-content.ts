@@ -9,6 +9,15 @@ export const contact = {
   address: "Avenue Habib Thamer, Tunisie",
 };
 
+// Renseigner ici les adresses réelles des pages de l'entreprise. Les entrées vides ne sont pas affichées.
+export const socialLinks: { label: string; url: string }[] = [
+  { label: "Facebook", url: "" },
+  { label: "Instagram", url: "" },
+  { label: "TikTok", url: "" },
+  { label: "LinkedIn", url: "" },
+  { label: "WhatsApp", url: "https://wa.me/21654479391" },
+];
+
 export const services = [
   {
     title: "Assistance médicale",
@@ -46,6 +55,7 @@ export const navItems = [
   { label: "Accueil", to: "/" as const },
   { label: "Services", to: "/services" as const },
   { label: "À propos", to: "/a-propos" as const },
+  { label: "Avis", to: "/avis" as const },
   { label: "Espace infos", to: "/actualites" as const },
   { label: "Contact", to: "/contact" as const },
 ];
